@@ -1,10 +1,27 @@
 import { Avatar, IconButton } from '@material-ui/core'
 import { Chat, DonutLarge, MoreVert, SearchOutlined } from '@material-ui/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Chatlist from './Chatlist'
+import db from './firebase'
 import './Leftpane.css'
 
+
 function Leftpane() {
+
+    const [rooms,setRooms] = useState([{id:1,data:{name:"room1"}}]);
+    
+    useEffect(()=>
+    {
+        db.collection("rooms").onSnapshot((snapshot)=>
+        setRooms(
+            snapshot.docs.map((doc) => ({
+                id:doc.id,
+                data:doc.data(),
+            }))
+        )
+        );
+    },[]);
+
   return (
     <div className='leftpane'>
         <div className='header'>
@@ -29,10 +46,11 @@ function Leftpane() {
         </div>
         <div className='chatList'>
             <Chatlist newChat={true}/>
-            <Chatlist/>
-            <Chatlist/>
-            <Chatlist/>
-
+            {
+                rooms.map(room =>(
+                    <Chatlist key={room.id} id={room.id} name={room.data.name}/>
+                ))
+            }
         </div>  
     </div>
   )

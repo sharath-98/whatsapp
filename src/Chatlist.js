@@ -1,8 +1,9 @@
 import { Avatar } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import './Chatlist.css'
+import db from './firebase';
 
-function Chatlist({newChat}) {
+function Chatlist({newChat, id, name}) {
     const [seed, setSeed] = useState('');
     
     useEffect(()=>{
@@ -10,10 +11,12 @@ function Chatlist({newChat}) {
     }, []);
 
     const createChat = () =>{
-        const chatName = prompt("Please enter the name of the chat");
-        if(chatName)
+        const newChatName = prompt("Please enter the name of the chat");
+        if(newChatName)
         {
-            //do somthing in the db here...
+            db.collection("rooms").add({
+                name:newChatName
+            });
         }
     };
   
@@ -21,7 +24,7 @@ function Chatlist({newChat}) {
     <div className='chatlist'>
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
         <div className='chatInfo'>
-            <h2>Room name</h2>
+            <h2>{name}</h2>
             <p>Last message ...</p>
         </div>
     </div>
