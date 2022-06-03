@@ -1,5 +1,6 @@
 import { Avatar } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import './Chatlist.css'
 import db from './firebase';
 
@@ -21,13 +22,15 @@ function Chatlist({newChat, id, name}) {
     };
   
     return !newChat ? (
-    <div className='chatlist'>
-        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
-        <div className='chatInfo'>
-            <h2>{name}</h2>
-            <p>Last message ...</p>
+    <Link to={`/users/${id}`}>
+        <div className='chatlist'>
+            <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
+            <div className='chatInfo'>
+                <h2>{name}</h2>
+                <p>Last message ...</p>
+            </div>
         </div>
-    </div>
+    </Link>
   ):(
       <div onClick={createChat} className='chatlist'>
           <h2>Add new chat</h2>
