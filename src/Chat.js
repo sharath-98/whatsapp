@@ -11,6 +11,7 @@ function Chat() {
     const [input, setInput] = useState('');
     const {userId} = useParams();
     const [userName, setUserName] = useState('');
+    const [message, setMessage] = useState([]);
 
     useEffect(()=>{
         if(userId){
@@ -24,6 +25,7 @@ function Chat() {
 
     const sendMessage = (e) =>{
        e.preventDefault();
+
        setInput("");
     };
 

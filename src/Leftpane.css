@@ -50,3 +50,9 @@
     overflow: scroll;
     flex: 1;
 }
+
+.user_info > p{
+    margin-top: 10px;
+    font-size: small;
+    margin-right: 15px;
+}

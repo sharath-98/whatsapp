@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react'
 import Chatlist from './Chatlist'
 import db from './firebase'
 import './Leftpane.css'
+import { useStateValue } from './StateProvider'
 
 
 function Leftpane() {
-
+    const [{user}, dispatch] = useStateValue();
     const [rooms,setRooms] = useState([{id:1,data:{name:"room1"}}]);
     
     useEffect(()=>
@@ -25,7 +26,11 @@ function Leftpane() {
   return (
     <div className='leftpane'>
         <div className='header'>
-            <Avatar/>
+            <Avatar src={user?.photoURL}/>
+            <div className='user_info'>
+                <h5>{user?.displayName}</h5>
+                <p>{user?.email}</p>
+            </div>
             <div className='header_right'>
                 <IconButton>
                     <DonutLarge/>
