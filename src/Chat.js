@@ -4,9 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import './Chat.css'
 import db from './firebase';
+import { useStateValue } from './StateProvider';
+import firebase from 'firebase'
 
 function Chat() {
 
+    const [{user}, dispatch] = useStateValue();
     const [seed, setSeed] = useState('');
     const [input, setInput] = useState('');
     const {userId} = useParams();
@@ -29,7 +32,12 @@ function Chat() {
 
     const sendMessage = (e) =>{
        e.preventDefault();
-
+       db.collection("rooms").doc(userId).collection("messages")
+       .add({
+         message:input,
+         name:user.displayName,
+         timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+        })
        setInput("");
     };
 
@@ -51,7 +59,7 @@ function Chat() {
         <div className='chat_body'>
             {
                 messages.map(msg => (
-                    <p  className={`message ${ true && 'receiver'}`}>
+                    <p  className={`message ${ msg.name === user.displayName && 'receiver'}`}>
                     <span className='message_user_name'>{msg.name}</span>
                     {msg.message}
                     <span className='message_time'>
