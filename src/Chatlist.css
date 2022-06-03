@@ -1,7 +1,7 @@
 .chatlist{
     display: flex;
     padding: 20px;
-    border: 1px solid #f6f6f6;
+    border-bottom: 0.3px solid #f6f6f6;
     cursor: pointer;
 }
 
@@ -15,5 +15,10 @@
 
 .chatInfo > h2{
     font-size: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 0px;
+}
+
+a{
+    color: black;
+    text-decoration: none;
 }
