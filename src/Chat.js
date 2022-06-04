@@ -1,4 +1,4 @@
-import { Avatar, IconButton } from '@material-ui/core'
+import { Avatar, IconButton, Popover } from '@material-ui/core'
 import { AttachFile, EmojiEmotions, InsertEmoticon, Mic, MoreVert, SearchOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
@@ -6,15 +6,26 @@ import './Chat.css'
 import db from './firebase';
 import { useStateValue } from './StateProvider';
 import firebase from 'firebase'
+import Picker from 'emoji-picker-react';
+import EmojiPicker from 'emoji-picker-react';
 
 function Chat() {
-
+    const [chosenEmoji, setChosenEmoji] = useState(null);
     const [{user}, dispatch] = useStateValue();
     const [seed, setSeed] = useState('');
     const [input, setInput] = useState('');
     const {userId} = useParams();
     const [userName, setUserName] = useState('');
     const [messages, setMessages] = useState([]);
+
+    const [show, setShow] = useState(false);
+
+    const onEmojiClick = (event, emojiObject) => {
+        console.log(emojiObject)
+        setInput(input + emojiObject.emoji);
+  };
+
+  
 
     useEffect(()=>{
         if(userId){
@@ -73,13 +84,20 @@ function Chat() {
             }
         </div>
         <div className='chat_footer'>
-                <EmojiEmotions/>
-            <form onSubmit={sendMessage}>
+                <EmojiEmotions onClick={()=>{setShow(!show)}}/>
+                <form onSubmit={sendMessage}>
                     <input value={input} onChange={(e) => setInput(e.target.value)} type="text" placeholder="Type a message"/>
                     <button type="submit"> Send a Message</button>
                 </form>
                 <Mic/>
+                
         </div>
+        <div className='emoji'>
+              {
+                  show? <EmojiPicker onEmojiClick={onEmojiClick} pickerStyle={{ width: '100%' }}/> : null
+              }
+          </div>
+        
     </div>
   )
 }
