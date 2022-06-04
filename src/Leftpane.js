@@ -15,6 +15,7 @@ function Leftpane() {
     const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -46,6 +47,10 @@ function Leftpane() {
             navigate('/');
         }
     }
+
+    const filterData = (e) =>{
+        setSearchTerm(e.target.value);
+    } 
 
   return (
     <div className='leftpane'>
@@ -138,13 +143,21 @@ function Leftpane() {
         <div className='search'>
             <div className='searchContainer'>
                 <SearchOutlined/>
-                <input placeholder='Search or start new chat' type='text'></input>
+                <input placeholder='Search or start new chat' onChange={filterData} type='text'></input>
             </div>
         </div>
         <div className='chatList'>
             <Chatlist newChat={true}/>
             {
-                rooms.map(room =>(
+                rooms.filter((room) => {
+                    if(searchTerm=="")
+                    {
+                        return room;
+                    }
+                    else if(room.data.name.toLowerCase().startsWith(searchTerm.toLowerCase())){
+                        return room;
+                    }
+                }).map(room =>(
                     <Chatlist key={room.id} id={room.id} name={room.data.name}/>
                 ))
             }
