@@ -61,8 +61,7 @@ function Chat() {
             <div className='user_info'>
                 <h3>{userName}</h3>
                 <p className='chat-room-last-seen'>
-                        Last seen {" "}
-                        {new Date(messages[messages.length - 1]?.timestamp?.toDate()).toUTCString()}
+                        Last Seen {new Date(messages[messages.length - 1]?.timestamp?.toDate()).toUTCString()}
                     </p>
             </div>
             <div className='chat_header_right'>
