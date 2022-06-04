@@ -38,6 +38,7 @@ function Chat() {
                     setMessages(snapshot.docs.map(doc=>doc.data()))
                 ))
             setSeed(Math.floor(Math.random() * 50000));
+            setInput("");
         }
     }, [userId]);
 
