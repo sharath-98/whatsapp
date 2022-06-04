@@ -40,7 +40,8 @@
     border-radius: 20px;
     text-decoration: none;
     width: 80%;
-    margin-left: 10px;
+    height: 25px;
+    margin-left: 4px;
 }
 
 .searchContainer > .MuiSvgIcon-root{
